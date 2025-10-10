@@ -1,4 +1,9 @@
 
+- [x] For each PQD, you need to select one or several features from the provided eight features to separate it from the other PQDs. Enough reasoning and results should be provided to support your selection.
+- [ ] Then, based on your selection, implement a classifier to test the effectiveness of
+your selection. Your classifier should have only one output which indicates the possibility of the fed sample belonging to the PQD under study.
+- [ ] The dataset should be split into training set and validation set with cross validation.
+
 | Name      | Correlations                                                        |
 | --------- | ------------------------------------------------------------------- |
 | Swell     | All besides 0, 3                                                    |
