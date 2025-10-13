@@ -21,7 +21,7 @@ results={}
 
 for snr in noise_levels:
   print(f"SNR {snr}:\n")
-  data = load_pqd_dataset(os.path.join(base_path, snr))
+  data = load_dataset(os.path.join(base_path, snr))
   X = data.iloc[:, :-1]
   y = data["Label"]
 
