@@ -10,6 +10,10 @@ your selection. Your classifier should have only one output which indicates the 
 | Transient | (1,2), (1,5), (1,6), (1,7), <br>(2,4), (2,5), (2,6), (2,7)<br>(5,7) |
 | Swell_h   | (1,4), (1,2), ()                                                    |
 
+| PQD      | sag                                    | swell                     | interruption       | transient | harmonics | fluctuation    | sag harmonics             | swell harmonics |
+| -------- | -------------------------------------- | ------------------------- | ------------------ | --------- | --------- | -------------- | ------------------------- | --------------- |
+| Features | time amplitude, harmonics, harmonics 2 | time amplitude, harmonics | time amplitude,min | harmonics | harmonics | time amplitude | time amplitude, harmonics | max/min         |
+
 
 ![[Pasted image 20251006121118.png]]
 
