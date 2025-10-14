@@ -32,7 +32,7 @@ for snr in noise_levels:
     hidden_layer_sizes=(64, 32),
     activation='relu',
     solver='adam',
-    max_iter=500,
+    max_iter=1000,
     random_state=42
   )
   mlp.fit(X_train, y_train)
