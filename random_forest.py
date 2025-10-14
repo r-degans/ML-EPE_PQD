@@ -12,7 +12,7 @@ def load_dataset(base_dir):
       df = pd.read_csv(os.path.join(base_dir, file))
       df["Label"] = label
       frames.append(df)
-  return pd.concat(frames,, ignore_index=True)
+  return pd.concat(frames, ignore_index=True)
 
 base_path = "Files/"
 noise_levels = ["SNR_20db", "SNR_30db", "SNR_40db", "SNR_50db", "SNR_noiseless"]
