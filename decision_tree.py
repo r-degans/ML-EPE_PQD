@@ -1,7 +1,7 @@
 import os
 import pandas as pd
 from sklearn.model_selection import train_test_split, cross_val_score
-from sklearn.tree import DecisionsTreeClassifier
+from sklearn.tree import DecisionTreeClassifier
 from sklearn.metrics import accuracy_score, classification_report, confusion_matrix
 
 def load_dataset(base_dir):
