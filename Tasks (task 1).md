@@ -1,14 +1,31 @@
 
 - [x] For each PQD, you need to select one or several features from the provided eight features to separate it from the other PQDs. Enough reasoning and results should be provided to support your selection.
-- [ ] Then, based on your selection, implement a classifier to test the effectiveness of
+- [x] Then, based on your selection, implement a classifier to test the effectiveness of
 your selection. Your classifier should have only one output which indicates the possibility of the fed sample belonging to the PQD under study.
-- [ ] The dataset should be split into training set and validation set with cross validation.
+- [x] The dataset should be split into training set and validation set with cross validation.
 
-| Name      | Correlations                                                        |
-| --------- | ------------------------------------------------------------------- |
-| Swell     | All besides 0, 3                                                    |
-| Transient | (1,2), (1,5), (1,6), (1,7), <br>(2,4), (2,5), (2,6), (2,7)<br>(5,7) |
-| Swell_h   | (1,4), (1,2), ()                                                    |
+```image-layout-a
+
+![[Pasted image 20251017124755.png]]
+![[Pasted image 20251017125327.png]]
+```
+
+```image-layout-a
+![[Pasted image 20251017124811.png]]
+![[Pasted image 20251017125401.png]]
+```
+
+| Name      | features                   |
+| --------- | -------------------------- |
+| Swell     | sd, max, avg abs           |
+| Transient | sd, max, sd fma, no. peaks |
+| Swell_h   | sd, max, no pts 0, avg abs |
+| normal    | min, max, std              |
+| sag_h     | no pts 0, max, sd, avg abs |
+| sag       | no pts 0, max, sd, avg abs |
+| interrupt | no pts 0, max, sd avg abs, |
+| harmonics | no pts 0, min, max, sd     |
+| flicker   | min, max, sd, pts 0        |
 
 | PQD      | sag                                    | swell                     | interruption       | transient | harmonics | fluctuation    | sag harmonics             | swell harmonics |
 | -------- | -------------------------------------- | ------------------------- | ------------------ | --------- | --------- | -------------- | ------------------------- | --------------- |
