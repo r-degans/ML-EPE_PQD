@@ -13,10 +13,28 @@ from sklearn.metrics import f1_score, accuracy_score, roc_curve, precision_recal
 from sklearn.linear_model import LogisticRegression, Lasso
 from sklearn import svm
 
+from datetime import datetime
+
+output_dir = Path("confusion_matrix_outputs")
+output_dir.mkdir(exist_ok=True)
+
+def save_confusion_matrix_plot(folder, plot_title="confusion_matrix"):
+    folder.mkdir(parents=True, exist_ok=True)
+    timestamp = datetime.now().strftime("%Y%m%d%H%M%S%f")
+    filename = f"{plot_title}_{timestamp}.png"
+    filepath = folder / filename
+    plt.savefig(filepath, dpi=300, bbox_inches="tight")
+    plt.close()
+    return filepath
+
 cwd = Path.cwd()
-directory = cwd / "Project_Data_EE4C12_EPE_PQD/SNR_noiseless"
+directory = cwd / "Project_Data_EE4C12_EPE_PQD/SNR_50db"
+noise = '50dB'
 files = [f.name for f in directory.iterdir()]
 data = [pd.read_csv(f).drop(columns=['Unnamed: 0']) for f in directory.iterdir() if f.is_file()]
+
+resultsFile = open(str("Task1-manual-" + noise + ".txt"), 'w')
+
 
 # Example: dictionary mapping each file to its list of features to keep
 selected_features_per_file = {
@@ -109,9 +127,9 @@ def linearModel(data):
         bestModel = modelList[np.argmax(diff)]
 
         y_prediction = clf_lr.predict(X_val)
-        ConfusionMatrixDisplay(confusion_matrix(y_val, y_prediction)).plot()
-        plt.title(str("linear " + files[file]))
-        plt.show()
+        resultsFile.write(str("Linear model " + files[file] +  '\n'))
+        resultsFile.write(str(str((confusion_matrix(y_val, y_prediction).tolist())) + '\n'))
+
     # F1_LR = f1_score(y_test, y_prediction)
     # Precision_LR = precision_score(y_test, y_prediction)
 
@@ -146,9 +164,10 @@ def linearLasso(data):
         bestModel = modelList[np.argmax(diff)]
 
         y_prediction = clf_lr.predict(X_val)
-        ConfusionMatrixDisplay(confusion_matrix(y_val, y_prediction)).plot()
-        plt.title(str("linLass " + files[file]))
-        plt.show()
+        resultsFile.write(str("linearLasso model " + files[file] +  '\n'))
+        resultsFile.write(str(str((confusion_matrix(y_val, y_prediction).tolist())) + '\n'))
+
+
     
     return Accuracy_LR, Recall_LR
 
@@ -184,9 +203,9 @@ def SVM(data):
         bestModel = modelList[np.argmax(diff)]
 
         y_prediction = clf_svmlin.predict(X_val)
-        ConfusionMatrixDisplay(confusion_matrix(y_val, y_prediction)).plot()
-        plt.title(str("SVM " + files[file]))
-        plt.show()
+        resultsFile.write(str("SVM model " + files[file] +  '\n'))
+        resultsFile.write(str(str((confusion_matrix(y_val, y_prediction).tolist())) + '\n'))
+
     return Accuracy_LR, Recall_LR
 
 linearModel(data)

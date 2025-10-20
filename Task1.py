@@ -13,14 +13,23 @@ from sklearn.metrics import f1_score, accuracy_score, roc_curve, precision_recal
 from sklearn.linear_model import LogisticRegression, Lasso
 from sklearn import svm
 
-cwd = Path.cwd()
-directory = cwd / "Project_Data_EE4C12_EPE_PQD/SNR_noiseless"
+from datetime import datetime
 
+output_dir = Path("confusion_matrix_outputs")
+output_dir.mkdir(exist_ok=True)
+
+
+
+cwd = Path.cwd()
+directory = cwd / "Project_Data_EE4C12_EPE_PQD/SNR_50db"
+noise = "50dB"
 data = [pd.read_csv(f).drop(columns=['Unnamed: 0']) for f in directory.iterdir() if f.is_file()]
 
 files = [f.name for f in directory.iterdir()]
 print(files)
 corrMatrices = [np.corrcoef(cat,rowvar=False) for cat in data]
+
+resultsFile = open(str("Task1-" + noise + ".txt"), 'w')
 
 # i = 0
 # for e in corrMatrices:
@@ -119,9 +128,9 @@ def linearModel(data):
         bestModel = modelList[np.argmax(diff)]
 
         y_prediction = clf_lr.predict(X_val)
-        ConfusionMatrixDisplay(confusion_matrix(y_val, y_prediction)).plot()
-        plt.title(str("linear " + files[file]))
-        plt.show()
+        resultsFile.write(str("Linear model " + files[file] +  '\n'))
+        resultsFile.write(str(str((confusion_matrix(y_val, y_prediction).tolist())) + '\n'))
+
     # F1_LR = f1_score(y_test, y_prediction)
     # Precision_LR = precision_score(y_test, y_prediction)
 
@@ -156,9 +165,10 @@ def linearLasso(data):
         bestModel = modelList[np.argmax(diff)]
 
         y_prediction = clf_lr.predict(X_val)
-        ConfusionMatrixDisplay(confusion_matrix(y_val, y_prediction)).plot()
-        plt.title(str("linLass " + files[file]))
-        plt.show()
+
+        resultsFile.write(str("linearLasso model " + files[file] +  '\n'))
+        resultsFile.write(str(str((confusion_matrix(y_val, y_prediction).tolist())) + '\n'))
+
     
     return Accuracy_LR, Recall_LR
 
@@ -194,9 +204,9 @@ def SVM(data):
         bestModel = modelList[np.argmax(diff)]
 
         y_prediction = clf_svmlin.predict(X_val)
-        ConfusionMatrixDisplay(confusion_matrix(y_val, y_prediction)).plot()
-        plt.title(str("SVM " + files[file]))
-        plt.show()
+        resultsFile.write(str("SVM model " + files[file] +  '\n'))
+        resultsFile.write(str(str((confusion_matrix(y_val, y_prediction).tolist())) + '\n'))
+
     return Accuracy_LR, Recall_LR
 
 linearModel(data)

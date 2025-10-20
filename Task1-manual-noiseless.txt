@@ -1,0 +1,54 @@
+Linear model Swell.csv
+[[202, 33], [4, 29]]
+Linear model Transient.csv
+[[221, 14], [0, 33]]
+Linear model Swell_harmonics.csv
+[[208, 27], [3, 30]]
+Linear model Sag_harmonics.csv
+[[194, 41], [3, 30]]
+Linear model Normal.csv
+[[205, 30], [5, 28]]
+Linear model Sag.csv
+[[200, 35], [1, 32]]
+Linear model Interruption.csv
+[[235, 0], [0, 33]]
+Linear model Harmonics.csv
+[[219, 16], [2, 31]]
+Linear model Flicker.csv
+[[156, 79], [1, 32]]
+linearLasso model Swell.csv
+[[234, 1], [0, 33]]
+linearLasso model Transient.csv
+[[235, 0], [0, 33]]
+linearLasso model Swell_harmonics.csv
+[[230, 5], [3, 30]]
+linearLasso model Sag_harmonics.csv
+[[218, 17], [1, 32]]
+linearLasso model Normal.csv
+[[230, 5], [0, 33]]
+linearLasso model Sag.csv
+[[234, 1], [1, 32]]
+linearLasso model Interruption.csv
+[[235, 0], [0, 33]]
+linearLasso model Harmonics.csv
+[[235, 0], [0, 33]]
+linearLasso model Flicker.csv
+[[214, 21], [0, 33]]
+SVM model Swell.csv
+[[158, 77], [1, 32]]
+SVM model Transient.csv
+[[181, 54], [2, 31]]
+SVM model Swell_harmonics.csv
+[[184, 51], [2, 31]]
+SVM model Sag_harmonics.csv
+[[154, 81], [0, 33]]
+SVM model Normal.csv
+[[202, 33], [6, 27]]
+SVM model Sag.csv
+[[141, 94], [1, 32]]
+SVM model Interruption.csv
+[[235, 0], [0, 33]]
+SVM model Harmonics.csv
+[[207, 28], [2, 31]]
+SVM model Flicker.csv
+[[217, 18], [1, 32]]
