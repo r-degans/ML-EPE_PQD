@@ -9,7 +9,7 @@ import seaborn as sn
 import numpy as np
 from sklearn.model_selection import train_test_split
 from sklearn.preprocessing import StandardScaler
-from sklearn.metrics import f1_score, accuracy_score, roc_curve, precision_recall_curve, PrecisionRecallDisplay, roc_auc_score, RocCurveDisplay, confusion_matrix, precision_score, recall_score, ConfusionMatrixDisplay
+from sklearn.metrics import f1_score, accuracy_score, roc_curve, precision_recall_curve, PrecisionRecallDisplay, roc_auc_score, RocCurveDisplay, confusion_matrix, precision_score, recall_score, ConfusionMatrixDisplay, f1_score
 from sklearn.linear_model import LogisticRegression, Lasso
 from sklearn import svm
 
@@ -21,15 +21,15 @@ output_dir.mkdir(exist_ok=True)
 
 
 cwd = Path.cwd()
-directory = cwd / "Project_Data_EE4C12_EPE_PQD/SNR_50db"
-noise = "50dB"
+directory = cwd / "Project_Data_EE4C12_EPE_PQD/SNR_noiseless"
+noise = "noiseless"
 data = [pd.read_csv(f).drop(columns=['Unnamed: 0']) for f in directory.iterdir() if f.is_file()]
 
 files = [f.name for f in directory.iterdir()]
 print(files)
 corrMatrices = [np.corrcoef(cat,rowvar=False) for cat in data]
 
-resultsFile = open(str("Task1-" + noise + ".txt"), 'w')
+resultsFile = open(str("Task1-F1" + noise + ".txt"), 'w')
 
 # i = 0
 # for e in corrMatrices:
@@ -100,6 +100,7 @@ def dataGen(data, file, dataDepth):
     return allData, y
 
 def linearModel(data):
+    resultsFile.write('model1 = [')
     for file in range(9): # Step through all csv's (all PQD's)
         print(files[file])
         Accuracy_LR = []
@@ -128,15 +129,18 @@ def linearModel(data):
         bestModel = modelList[np.argmax(diff)]
 
         y_prediction = clf_lr.predict(X_val)
-        resultsFile.write(str("Linear model " + files[file] +  '\n'))
-        resultsFile.write(str(str((confusion_matrix(y_val, y_prediction).tolist())) + '\n'))
-
+        # resultsFile.write(str("Linear model " + files[file] +  '\n'))
+        resultsFile.write(str(f1_score(y_val, y_prediction)) + ',')
+        # resultsFile.write(str(str((confusion_matrix(y_val, y_prediction).tolist())) + '\n'))
+    resultsFile.write('] \n')
     # F1_LR = f1_score(y_test, y_prediction)
     # Precision_LR = precision_score(y_test, y_prediction)
 
     return Accuracy_LR, Recall_LR
 
 def linearLasso(data):
+    resultsFile.write('model2 = [')
+    
     for file in range(9): # Step through all csv's (all PQD's)
         print(files[file])
         Accuracy_LR = []
@@ -165,19 +169,22 @@ def linearLasso(data):
         bestModel = modelList[np.argmax(diff)]
 
         y_prediction = clf_lr.predict(X_val)
+        resultsFile.write(str(f1_score(y_val, y_prediction)) + ',')
 
-        resultsFile.write(str("linearLasso model " + files[file] +  '\n'))
-        resultsFile.write(str(str((confusion_matrix(y_val, y_prediction).tolist())) + '\n'))
+        # resultsFile.write(str("linearLasso model " + files[file] +  '\n'))
+        # resultsFile.write(str("F1 " + str(accuracy_score(y_val, y_prediction)) + \
+        #      " Acc " + str(accuracy_score(y_val, y_prediction)) + ", Rec " + str(recall_score(y_val, y_prediction)) + '\n'))
+        # resultsFile.write(str(str((confusion_matrix(y_val, y_prediction).tolist())) + '\n'))
 
+    resultsFile.write('] \n')
     
     return Accuracy_LR, Recall_LR
 
 
 def SVM(data):
-    
+    resultsFile.write('model3 = [')
     for file in range(9): # Step through all csv's (all PQD's)
         print(files[file])
-
         Accuracy_LR = []
         Recall_LR = []
         modelList = []
@@ -204,8 +211,13 @@ def SVM(data):
         bestModel = modelList[np.argmax(diff)]
 
         y_prediction = clf_svmlin.predict(X_val)
-        resultsFile.write(str("SVM model " + files[file] +  '\n'))
-        resultsFile.write(str(str((confusion_matrix(y_val, y_prediction).tolist())) + '\n'))
+        resultsFile.write(str(f1_score(y_val, y_prediction)) + ',')
+
+        # resultsFile.write(str("SVM model " + files[file] +  '\n'))
+        # resultsFile.write(str("F1 " + str(accuracy_score(y_val, y_prediction)) + \
+        #      " Acc " + str(accuracy_score(y_val, y_prediction)) + ", Rec " + str(recall_score(y_val, y_prediction)) + '\n'))
+        # resultsFile.write(str(str((confusion_matrix(y_val, y_prediction).tolist())) + '\n'))
+    resultsFile.write('] \n')
 
     return Accuracy_LR, Recall_LR
 

@@ -1,3 +1,13 @@
+![[Pasted image 20251020133251.png]]
+
+![[Pasted image 20251020133418.png]]
+
+![[Pasted image 20251020133519.png]]
+
+![[Pasted image 20251020133624.png]]
+
+![[Pasted image 20251020132839.png]]
+
 
 # Lineair
 

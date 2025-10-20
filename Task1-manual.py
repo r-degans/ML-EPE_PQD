@@ -28,12 +28,13 @@ def save_confusion_matrix_plot(folder, plot_title="confusion_matrix"):
     return filepath
 
 cwd = Path.cwd()
-directory = cwd / "Project_Data_EE4C12_EPE_PQD/SNR_50db"
-noise = '50dB'
+directory = cwd / "Project_Data_EE4C12_EPE_PQD/SNR_noiseless"
+noise = 'noiseless'
 files = [f.name for f in directory.iterdir()]
 data = [pd.read_csv(f).drop(columns=['Unnamed: 0']) for f in directory.iterdir() if f.is_file()]
 
-resultsFile = open(str("Task1-manual-" + noise + ".txt"), 'w')
+resultsFile = open(str("Task1-manual-F1" + noise + ".txt"), 'w')
+
 
 
 # Example: dictionary mapping each file to its list of features to keep
@@ -99,6 +100,7 @@ def dataGen(data, file, dataDepth):
     return allData, y
 
 def linearModel(data):
+    resultsFile.write('model4 = [')
     for file in range(9): # Step through all csv's (all PQD's)
         print(files[file])
         Accuracy_LR = []
@@ -127,15 +129,22 @@ def linearModel(data):
         bestModel = modelList[np.argmax(diff)]
 
         y_prediction = clf_lr.predict(X_val)
-        resultsFile.write(str("Linear model " + files[file] +  '\n'))
-        resultsFile.write(str(str((confusion_matrix(y_val, y_prediction).tolist())) + '\n'))
+        resultsFile.write(str(f1_score(y_val, y_prediction)) + ',')
+        
+        # resultsFile.write(str("Linear model " + files[file] +  '\n'))
+        # resultsFile.write(str("F1 " + str(accuracy_score(y_val, y_prediction)) + \
+        #     " Acc " + str(accuracy_score(y_val, y_prediction)) + ", Rec " + str(recall_score(y_val, y_prediction)) + '\n'))
+        # resultsFile.write(str(str((confusion_matrix(y_val, y_prediction).tolist())) + '\n'))
 
     # F1_LR = f1_score(y_test, y_prediction)
     # Precision_LR = precision_score(y_test, y_prediction)
+    resultsFile.write('] \n')
 
     return Accuracy_LR, Recall_LR
 
 def linearLasso(data):
+    resultsFile.write('model5 = [')
+    
     for file in range(9): # Step through all csv's (all PQD's)
         print(files[file])
         Accuracy_LR = []
@@ -164,15 +173,21 @@ def linearLasso(data):
         bestModel = modelList[np.argmax(diff)]
 
         y_prediction = clf_lr.predict(X_val)
-        resultsFile.write(str("linearLasso model " + files[file] +  '\n'))
-        resultsFile.write(str(str((confusion_matrix(y_val, y_prediction).tolist())) + '\n'))
+        resultsFile.write(str(f1_score(y_val, y_prediction)) + ',')
+        
+        # resultsFile.write(str("linearLasso model " + files[file] +  '\n'))
+        # resultsFile.write(str("F1 " + str(accuracy_score(y_val, y_prediction)) + \
+        #      " Acc " + str(accuracy_score(y_val, y_prediction)) + ", Rec " + str(recall_score(y_val, y_prediction)) + '\n'))
+        # resultsFile.write(str(str((confusion_matrix(y_val, y_prediction).tolist())) + '\n'))
 
 
+    resultsFile.write('] \n')
     
     return Accuracy_LR, Recall_LR
 
 
 def SVM(data):
+    resultsFile.write('model6 = [')
     
     for file in range(9): # Step through all csv's (all PQD's)
         print(files[file])
@@ -203,8 +218,13 @@ def SVM(data):
         bestModel = modelList[np.argmax(diff)]
 
         y_prediction = clf_svmlin.predict(X_val)
-        resultsFile.write(str("SVM model " + files[file] +  '\n'))
-        resultsFile.write(str(str((confusion_matrix(y_val, y_prediction).tolist())) + '\n'))
+        resultsFile.write(str(f1_score(y_val, y_prediction)) + ',')
+        
+        # resultsFile.write(str("SVM model " + files[file] +  '\n'))
+        # resultsFile.write(str("F1 " + str(accuracy_score(y_val, y_prediction)) + \
+        #      " Acc " + str(accuracy_score(y_val, y_prediction)) + ", Rec " + str(recall_score(y_val, y_prediction)) + '\n'))
+        # resultsFile.write(str(str((confusion_matrix(y_val, y_prediction).tolist())) + '\n'))
+    resultsFile.write('] \n')
 
     return Accuracy_LR, Recall_LR
 
