@@ -1,3 +1,7 @@
+zonder normaliseren: (som van 3 modellen gemiddelde F1)
+![[Pasted image 20251022132413.png]]
+
+
 ![[Pasted image 20251020133251.png]]
 
 ![[Pasted image 20251020133418.png]]
