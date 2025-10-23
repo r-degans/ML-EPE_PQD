@@ -34,8 +34,9 @@ for snr in noise_levels:
     activation='relu',
     solver='adam',
     max_iter=1000,
+    alpha=0.0001,
+    shuffle=True,
     random_state=42
-# in assignment hidden_layer_size=100, alpha=0.0001, shuffle=True    
   )
   mlp.fit(X_train, y_train)
   y_pred = mlp.predict(X_test)
