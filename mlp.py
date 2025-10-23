@@ -34,7 +34,7 @@ for snr in noise_levels:
 #    hidden_layer_sizes=(64, 32),
     activation='relu',
     solver='adam',
-    max_iter=1000,
+    max_iter=2000,
     alpha=0.0001,
     shuffle=True,
     random_state=42
