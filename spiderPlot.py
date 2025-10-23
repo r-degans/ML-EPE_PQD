@@ -102,5 +102,5 @@ for noise in noiseList:
 
 
     plt.tight_layout()
-    plt.show()
+    plt.savefig(str(noise) + "F1.png")
     del model1, model2, model3, model4, model5, model6
