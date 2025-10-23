@@ -38,9 +38,9 @@ for snr in noise_levels:
   print(f"\nDecision Tree ({snr} db)")
 #  print(classification_report(y_test, y_pred))
   pqd = sorted(y_test.unique())
-  f1 = f1_score(y_test, y_pred, average = None, labels = pqd)
+  f1 = f1_score(y_test, y_pred, average = None, pqd = pqd)
   print(f"F1-score:")
-  for label, value in zip(labels, f1):
+  for label, value in zip(pqd, f1):
     print(f"{label}: {score: .4f}")
   
   f1_average = f1_score(y_test, y_pred, average='macro')
