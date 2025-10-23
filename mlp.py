@@ -22,7 +22,6 @@ noise_levels = ["SNR_20db", "SNR_30db", "SNR_40db", "SNR_50db", "SNR_noiseless"]
 results={}
 
 for snr in noise_levels:
-  print(f"SNR value = {snr}:\n")
   data = load_dataset(os.path.join(file_path, snr))
   X = data.iloc[:, :-1]
   y = data["Label"]
@@ -45,7 +44,7 @@ for snr in noise_levels:
   accuracy = accuracy_score(y_test, y_pred)
   results[snr] = accuracy
 
-  print(f"\nMLP ({snr})")
+  print(f"\nMLP (SNR value = {snr})")
   
   pqd = sorted(y_test.unique())
   f1 = f1_score(y_test, y_pred, average = None, labels = pqd)
@@ -57,8 +56,3 @@ for snr in noise_levels:
   print("Confusion Matrix:\n", confusion_matrix(y_test, y_pred))
   cv_scores = cross_val_score(mlp, X, y, cv=5)
   print("Cross validation accuracy:", cv_scores.mean())
-
-print("MLP Summary")
-for snr, accuracy in results.items():
-  print(f"{snr}: {accuracy:.4f}")
-
