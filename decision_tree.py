@@ -21,7 +21,7 @@ noise_levels = ["SNR_20db", "SNR_30db", "SNR_40db", "SNR_50db", "SNR_noiseless"]
 results={}
 
 for snr in noise_levels:
-  print(f"SNR value = {snr}:\n")
+#  print(f"SNR value = {snr}:\n")
   data = load_dataset(os.path.join(file_path, snr))
   X = data.iloc[:, :-1]
   y = data["Label"]
@@ -35,7 +35,7 @@ for snr in noise_levels:
   accuracy = accuracy_score(y_test, y_pred)
   results[snr] = accuracy
 
-  print(f"\nDecision Tree ({snr})")
+  print(f"\nDecision Tree (SNR value = {snr})")
   pqd = sorted(y_test.unique())
   f1 = f1_score(y_test, y_pred, average = None, labels = pqd)
   print(f"F1-score:")
