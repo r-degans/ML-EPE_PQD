@@ -1,0 +1,114 @@
+#     selected_features_per_file = {
+#         "Swell.csv": ["no. pt near 0", "sd", "max", "avg abs"],
+#         "Transient.csv": ["no. pt near 0", "sd", "max", "sd fma", "no. pks"],
+#         "Swell_harmonics.csv": ["no. pt near 0", "sd fma 3", "max", "sd", "avg abs"],
+#         "Normal.csv": ["min", "max", "sd"],
+#         "Sag_harmonics.csv": ["no. pt near 0","sd", "max", "sd fma 3", "avg abs"],
+#         "Sag.csv": ["no. pt near 0", "max", "sd", "avg abs"],
+#         "Interruption.csv": ["no. pt near 0","sd", "avg abs", "max"],
+#         "Harmonics.csv": ["no. pt near 0", "min", "sd fma 3"],
+#         "Flicker.csv": ["min", "no. pt near 0","sd", "max"]
+#         # Add entries for all files
+#     }
+
+
+# Linear Flicker.csv noiseless Index(['sd fma', 'avg abs', 'sd fma 3', 'max', 'sd', 'min'], dtype='object')
+# Linear lasso Flicker.csv noiseless Index(['sd fma', 'avg abs', 'sd', 'max', 'no. pks', 'min', 'sd fma 3',
+# SVM Flicker.csv noiseless Index(['sd fma', 'avg abs', 'sd fma 3', 'max', 'sd', 'min'], dtype='object')
+# Linear Swell.csv noiseless Index(['sd fma', 'avg abs', 'sd', 'sd fma 3', 'no. pks', 'min'], dtype='object')
+# Linear Sag_harmonics.csv noiseless Index(['avg abs', 'no. pks', 'sd', 'sd fma', 'max', 'sd fma 3',
+# Linear Transient.csv noiseless Index(['no. pks', 'avg abs', 'sd', 'min', 'max', 'sd fma 3', 'sd fma'], dtype='object')
+# Linear Interruption.csv noiseless Index(['sd fma', 'no. pks', 'avg abs', 'sd', 'max', 'min', 'sd fma 3',
+# Linear Swell_harmonics.csv noiseless Index(['avg abs', 'no. pks', 'sd', 'sd fma', 'min', 'sd fma 3'], dtype='object')
+# Linear Normal.csv noiseless Index(['sd fma', 'no. pks', 'min', 'avg abs', 'sd fma 3', 'no. pt near 0'], dtype='object')
+# Linear Sag.csv noiseless Index(['sd fma', 'avg abs', 'max', 'sd fma 3', 'no. pks', 'no. pt near 0'], dtype='object')
+# Linear Harmonics.csv noiseless Index(['no. pks', 'min', 'sd fma', 'avg abs', 'sd fma 3', 'no. pt near 0'], dtype='object')
+# Linear lasso Swell.csv noiseless Index(['sd fma', 'avg abs', 'sd', 'sd fma 3', 'no. pks', 'min'], dtype='object')
+# Linear lasso Sag_harmonics.csv noiseless Index(['avg abs', 'no. pks', 'sd', 'sd fma', 'max', 'sd fma 3',
+# Linear lasso Transient.csv noiseless Index(['no. pks', 'avg abs', 'sd', 'sd fma 3', 'min'], dtype='object')
+# Linear lasso Interruption.csv noiseless Index(['sd fma', 'no. pks', 'avg abs', 'sd', 'max', 'min', 'sd fma 3',
+# Linear lasso Swell_harmonics.csv noiseless Index(['avg abs', 'no. pks', 'sd', 'sd fma', 'min', 'sd fma 3'], dtype='object')
+# Linear lasso Normal.csv noiseless Index(['sd fma', 'no. pks', 'min', 'avg abs', 'sd fma 3', 'no. pt near 0'], dtype='object')
+# Linear lasso Sag.csv noiseless Index(['sd fma', 'avg abs', 'max', 'no. pks', 'sd fma 3', 'sd',
+# Linear lasso Harmonics.csv noiseless Index(['no. pks', 'min', 'sd fma', 'avg abs', 'sd fma 3', 'no. pt near 0'], dtype='object')
+# SVM Swell.csv noiseless Index(['sd fma', 'avg abs', 'sd fma 3', 'sd'], dtype='object')
+# SVM Sag_harmonics.csv noiseless Index(['avg abs', 'no. pks', 'sd', 'max', 'sd fma', 'sd fma 3'], dtype='object')
+# SVM Transient.csv noiseless Index(['no. pks', 'avg abs', 'sd', 'min', 'max', 'sd fma 3', 'sd fma'], dtype='object')
+# SVM Interruption.csv noiseless Index(['sd fma', 'no. pks', 'avg abs', 'sd', 'max', 'min', 'sd fma 3',
+# SVM Swell_harmonics.csv noiseless Index(['avg abs', 'no. pks', 'sd', 'sd fma', 'min', 'sd fma 3'], dtype='object')
+# SVM Normal.csv noiseless Index(['sd fma', 'no. pks', 'min', 'avg abs', 'sd fma 3', 'no. pt near 0'], dtype='object')
+# SVM Sag.csv noiseless Index(['sd fma', 'avg abs', 'max', 'sd fma 3', 'no. pks', 'no. pt near 0'], dtype='object')
+# SVM Harmonics.csv noiseless Index(['no. pks', 'sd fma', 'sd fma 3'], dtype='object')
+
+# Manual selection
+selected_features_per_file = {
+    "Swell.csv": ["no. pt near 0", "sd", "max", "avg abs"],
+    "Transient.csv": ["no. pt near 0", "sd", "max", "sd fma", "no. pks"],
+    "Swell_harmonics.csv": ["no. pt near 0", "sd fma 3", "max", "sd", "avg abs"],
+    "Normal.csv": ["min", "max", "sd"],
+    "Sag_harmonics.csv": ["no. pt near 0","sd", "max", "sd fma 3", "avg abs"],
+    "Sag.csv": ["no. pt near 0", "max", "sd", "avg abs"],
+    "Interruption.csv": ["no. pt near 0","sd", "avg abs", "max"],
+    "Harmonics.csv": ["no. pt near 0", "min", "sd fma 3"],
+    "Flicker.csv": ["min", "no. pt near 0","sd", "max"]
+}
+
+# Model selections
+model_selected_features = {
+    "Linear": {
+        "Flicker.csv": ['sd fma', 'avg abs', 'sd fma 3', 'max', 'sd', 'min'],
+        "Swell.csv": ['sd fma', 'avg abs', 'sd', 'sd fma 3', 'no. pks', 'min'],
+        "Sag_harmonics.csv": ['avg abs', 'no. pks', 'sd', 'sd fma', 'max', 'sd fma 3'],
+        "Transient.csv": ['no. pks', 'avg abs', 'sd', 'min', 'max', 'sd fma 3', 'sd fma'],
+        "Interruption.csv": ['sd fma', 'no. pks', 'avg abs', 'sd', 'max', 'min', 'sd fma 3'],
+        "Swell_harmonics.csv": ['avg abs', 'no. pks', 'sd', 'sd fma', 'min', 'sd fma 3'],
+        "Normal.csv": ['sd fma', 'no. pks', 'min', 'avg abs', 'sd fma 3', 'no. pt near 0'],
+        "Sag.csv": ['sd fma', 'avg abs', 'max', 'sd fma 3', 'no. pks', 'no. pt near 0'],
+        "Harmonics.csv": ['no. pks', 'min', 'sd fma', 'avg abs', 'sd fma 3', 'no. pt near 0']
+    },
+    "Linear_lasso": {
+        "Flicker.csv": ['sd fma', 'avg abs', 'sd', 'max', 'no. pks', 'min', 'sd fma 3'],
+        "Swell.csv": ['sd fma', 'avg abs', 'sd', 'sd fma 3', 'no. pks', 'min'],
+        "Sag_harmonics.csv": ['avg abs', 'no. pks', 'sd', 'sd fma', 'max', 'sd fma 3'],
+        "Transient.csv": ['no. pks', 'avg abs', 'sd', 'sd fma 3', 'min'],
+        "Interruption.csv": ['sd fma', 'no. pks', 'avg abs', 'sd', 'max', 'min', 'sd fma 3'],
+        "Swell_harmonics.csv": ['avg abs', 'no. pks', 'sd', 'sd fma', 'min', 'sd fma 3'],
+        "Normal.csv": ['sd fma', 'no. pks', 'min', 'avg abs', 'sd fma 3', 'no. pt near 0'],
+        "Sag.csv": ['sd fma', 'avg abs', 'max', 'no. pks', 'sd fma 3', 'sd'],
+        "Harmonics.csv": ['no. pks', 'min', 'sd fma', 'avg abs', 'sd fma 3', 'no. pt near 0']
+    },
+    "SVM": {
+        "Flicker.csv": ['sd fma', 'avg abs', 'sd fma 3', 'max', 'sd', 'min'],
+        "Swell.csv": ['sd fma', 'avg abs', 'sd fma 3', 'sd'],
+        "Sag_harmonics.csv": ['avg abs', 'no. pks', 'sd', 'max', 'sd fma', 'sd fma 3'],
+        "Transient.csv": ['no. pks', 'avg abs', 'sd', 'min', 'max', 'sd fma 3', 'sd fma'],
+        "Interruption.csv": ['sd fma', 'no. pks', 'avg abs', 'sd', 'max', 'min', 'sd fma 3'],
+        "Swell_harmonics.csv": ['avg abs', 'no. pks', 'sd', 'sd fma', 'min', 'sd fma 3'],
+        "Normal.csv": ['sd fma', 'no. pks', 'min', 'avg abs', 'sd fma 3', 'no. pt near 0'],
+        "Sag.csv": ['sd fma', 'avg abs', 'max', 'sd fma 3', 'no. pks', 'no. pt near 0'],
+        "Harmonics.csv": ['no. pks', 'sd fma', 'sd fma 3']
+    }
+}
+
+# Function to compare features
+def compare_features(manual_dict, model_dict):
+    for model_name, files in model_dict.items():
+        print(f"\n=== Model: {model_name} ===")
+        for file, model_features in files.items():
+            manual_features = manual_dict.get(file, [])
+            manual_set = set(manual_features)
+            model_set = set(model_features)
+
+            common = manual_set & model_set
+            extra = model_set - manual_set
+            missing = manual_set - model_set
+
+            print(f"\nFile: {file}")
+            print(f"Manual: {manual_features}")
+            print(f"Model : {model_features}")
+            print(f"✅ Common      : {sorted(common)}")
+            print(f"➕ Extra       : {sorted(extra)}")
+            print(f"➖ Missing     : {sorted(missing)}")
+
+# Run comparison
+compare_features(selected_features_per_file, model_selected_features)

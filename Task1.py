@@ -20,7 +20,7 @@ output_dir = Path("confusion_matrix_outputs")
 output_dir.mkdir(exist_ok=True)
 
 cwd = Path.cwd()
-noises = ["noiseless", "50db", "40db", "30db", "20db"]
+noises = ["noiseless"] #, "50db", "40db", "30db", "20db"]
 
 
 def process(noise):
@@ -104,46 +104,46 @@ def process(noise):
 
     def linearModel(data):
         resultsFile.write('model1 = [')
+        
         for file in range(9): # Step through all csv's (all PQD's)
             # print(files[file])
             Accuracy_LR = []
             Recall_LR = []
             F1_list = []
             modelList = []
+            xList = []
+            yList = []
             for dataDepth in range(1,9): # Step through all the feature sets
                 dataX, dataY = dataGen(data, file, dataDepth)
             
-                scaler = StandardScaler()
+                scaler = StandardScaler().set_output(transform='pandas')
                 scaler.fit(dataX)
-                
-                X_scaled = scaler.transform(dataX)
-                
+                dataX = scaler.transform(dataX)
+
                 Shuffle_state = 4720
                 X_train, X_test, y_train, y_test = train_test_split(dataX, dataY, test_size=0.2, random_state=Shuffle_state)
                 X_train, X_val, y_train, y_val   = train_test_split(X_train, y_train, test_size=0.25, random_state=Shuffle_state) # 0.25 x 0.8 = 0.2
-
-                X_train = scaler.transform(X_train)
-                X_test = scaler.transform(X_test)
-                X_val = scaler.transform(X_val)
+                xList.append(X_val)
+                yList.append(y_val)
 
                 clf_lr = LogisticRegression(class_weight='balanced', tol=1e-6, max_iter=100_000).fit(X_train, y_train)
                 modelList.append(clf_lr)
-                y_prediction = clf_lr.predict(X_val)
+                y_prediction = clf_lr.predict(X_test)
 
-                Accuracy_LR.append(accuracy_score(y_val, y_prediction)) 
-                Recall_LR.append(recall_score(y_val, y_prediction))
-                F1_list.append(f1_score(y_val, y_prediction))
+                Accuracy_LR.append(accuracy_score(y_test, y_prediction)) 
+                Recall_LR.append(recall_score(y_test, y_prediction))
+                F1_list.append(f1_score(y_test, y_prediction))
             
-            diff = (F1_list)
+            y_prediction = modelList[np.argmax(F1_list)].predict(xList[np.argmax(F1_list)])
             # print(str("Linear " + files[file]))
             # print(modelList[np.argmax(F1_list)].feature_names_in_)
             # resultsFile.write(str("Linear model " + files[file] +  '\n'))
-            resultsFile.write(str(max(F1_list)) + ',')
+            resultsFile.write(str(f1_score(yList[np.argmax(F1_list)], y_prediction)) + ',')
             # resultsFile.write(str(str((confusion_matrix(y_val, y_prediction).tolist())) + '\n'))
+            print(str(files[file]) + " " + str(modelList[np.argmax(F1_list)].feature_names_in_))
         resultsFile.write('] \n')
         # F1_LR = f1_score(y_test, y_prediction)
         # Precision_LR = precision_score(y_test, y_prediction)
-
         return Accuracy_LR, Recall_LR
 
     def linearLasso(data):
@@ -162,40 +162,42 @@ def process(noise):
             n_jobs=-1,
         )
 
+
         for file in range(9): # Step through all csv's (all PQD's)
             # print(files[file])
             Accuracy_LR = []
             Recall_LR = []
             modelList = []
             F1_list = []
-
+            xList = []
+            yList = []
             for dataDepth in range(1,9): # Step through all the feature sets
                 dataX, dataY = dataGen(data, file, dataDepth)
-            
-                scaler = StandardScaler()
-                scaler.fit(dataX)
                 
-                X_scaled = scaler.transform(dataX)
+                scaler = StandardScaler().set_output(transform='pandas')
+                scaler.fit(dataX)
+                dataX = scaler.transform(dataX)
                 
                 Shuffle_state = 4720
                 X_train, X_test, y_train, y_test = train_test_split(dataX, dataY, test_size=0.2, random_state=Shuffle_state)
                 X_train, X_val, y_train, y_val   = train_test_split(X_train, y_train, test_size=0.25, random_state=Shuffle_state) # 0.25 x 0.8 = 0.2
-
-                X_train = scaler.transform(X_train)
-                X_test = scaler.transform(X_test)
-                X_val = scaler.transform(X_val)
+                xList.append(X_val)
+                yList.append(y_val)
 
                 # clf_lr = LogisticRegression(class_weight='balanced', penalty='l1', solver='liblinear', C=40.0, max_iter=100_000, tol = 1e-6).fit(X_train, y_train)
                 grid_search.fit(X_train, y_train)
                 modelList.append(grid_search.best_estimator_)
-                y_prediction = grid_search.best_estimator_.predict(X_val)
+                y_prediction = grid_search.best_estimator_.predict(X_test)
 
-                Accuracy_LR.append(accuracy_score(y_val, y_prediction)) 
-                Recall_LR.append(recall_score(y_val, y_prediction))
+                Accuracy_LR.append(accuracy_score(y_test, y_prediction)) 
+                Recall_LR.append(recall_score(y_test, y_prediction))
             
-                F1_list.append(f1_score(y_val, y_prediction))
+                F1_list.append(f1_score(y_test, y_prediction))
             
-            resultsFile.write(str(max(F1_list)) + ',')
+
+            y_prediction = modelList[np.argmax(F1_list)].predict(xList[np.argmax(F1_list)])
+            resultsFile.write(str(f1_score(yList[np.argmax(F1_list)], y_prediction)) + ',')
+
             # print(str("Linear lasso" + files[file]))
             # print(modelList[np.argmax(F1_list)].feature_names_in_)
 
@@ -226,38 +228,39 @@ def process(noise):
             n_jobs=-1   # use all available CPU cores
         )
 
+
         for file in range(9): # Step through all csv's (all PQD's)
             # print(files[file])
             Accuracy_LR = []
             Recall_LR = []
             modelList = []
             F1_list = []
+            xList = []
+            yList = []
             for dataDepth in range(1,9): # Step through all the feature sets
                 dataX, dataY = dataGen(data, file, dataDepth)
-            
-                scaler = StandardScaler()
+                
+                scaler = StandardScaler().set_output(transform='pandas')
                 scaler.fit(dataX)
-                
-                X_scaled = scaler.transform(dataX)
-                
+                dataX = scaler.transform(dataX)
                 Shuffle_state = 4720
                 X_train, X_test, y_train, y_test = train_test_split(dataX, dataY, test_size=0.2, random_state=Shuffle_state)
                 X_train, X_val, y_train, y_val   = train_test_split(X_train, y_train, test_size=0.25, random_state=Shuffle_state) # 0.25 x 0.8 = 0.2
-
-                X_train = scaler.transform(X_train)
-                X_test = scaler.transform(X_test)
-                X_val = scaler.transform(X_val)
-
+                xList.append(X_val)
+                yList.append(y_val)
                 # clf_svmlin = svm.SVC(C=100.0, coef0=0.0, tol=1e-6, probability=True, class_weight='balanced').fit(X_train, y_train)
                 grid_search.fit(X_train, y_train)
                 modelList.append(grid_search.best_estimator_)
-                y_prediction = grid_search.best_estimator_.predict(X_val)
+                y_prediction = grid_search.best_estimator_.predict(X_test)
 
-                Accuracy_LR.append(accuracy_score(y_val, y_prediction)) 
-                Recall_LR.append(recall_score(y_val, y_prediction))
-                F1_list.append(f1_score(y_val, y_prediction))
+                Accuracy_LR.append(accuracy_score(y_test, y_prediction)) 
+                Recall_LR.append(recall_score(y_test, y_prediction))
+                F1_list.append(f1_score(y_test, y_prediction))
 
-            resultsFile.write(str(max(F1_list)) + ',')
+            
+            y_prediction = modelList[np.argmax(F1_list)].predict(xList[np.argmax(F1_list)])
+            resultsFile.write(str(f1_score(yList[np.argmax(F1_list)], y_prediction)) + ',')
+            
             # print(str("SVM " + files[file]))
 
             # print(modelList[np.argmax(F1_list)].feature_names_in_)
