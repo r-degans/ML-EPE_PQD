@@ -9,7 +9,7 @@ def load_dataset(dir):
   frames=[]
   for filename in os.listdir(dir):
     if filename.endswith(".csv"):
-      label=os.path.splitext(file)[0]
+      label=os.path.splitext(filename)[0]
       df = pd.read_csv(os.path.join(dir, filename))
       df["Label"] = label
       frames.append(df)
