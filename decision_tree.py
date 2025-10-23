@@ -3,7 +3,7 @@ import pandas as pd
 import numpy as np
 from sklearn.tree import DecisionTreeClassifier
 from sklearn.model_selection import train_test_split, cross_val_score
-from sklearn.metrics import accuracy_score, classification_report, confusion_matrix, f1_score
+from sklearn.metrics import accuracy_score, confusion_matrix, f1_score
 
 def load_dataset(dir):
   frames=[]
@@ -36,13 +36,11 @@ for snr in noise_levels:
   results[snr] = accuracy
 
   print(f"\nDecision Tree ({snr})")
-#  print(classification_report(y_test, y_pred))
   pqd = sorted(y_test.unique())
   f1 = f1_score(y_test, y_pred, average = None, labels = pqd)
   print(f"F1-score:")
   for label, value in zip(pqd, f1):
     print(f"{label}: {value: .4f}")
-  
   f1_average = f1_score(y_test, y_pred, average='macro')
   print(f"F1-score averaged: {f1_average:.4f}")
   print("Confusion Matrix:\n", confusion_matrix(y_test, y_pred))
