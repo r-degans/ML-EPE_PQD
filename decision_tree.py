@@ -21,7 +21,6 @@ noise_levels = ["SNR_20db", "SNR_30db", "SNR_40db", "SNR_50db", "SNR_noiseless"]
 results={}
 
 for snr in noise_levels:
-#  print(f"SNR value = {snr}:\n")
   data = load_dataset(os.path.join(file_path, snr))
   X = data.iloc[:, :-1]
   y = data["Label"]
@@ -47,6 +46,6 @@ for snr in noise_levels:
   cv_scores = cross_val_score(clf, X, y, cv=5)
   print("Cross validation accuracy:", cv_scores.mean())
 
-print("Decision Tree Summary")
-for snr, accuracy in results.items():
-  print(f"{snr}: {accuracy:.4f}")
+#print("Decision Tree Summary")
+#for snr, accuracy in results.items():
+#  print(f"{snr}: {accuracy:.4f}")
