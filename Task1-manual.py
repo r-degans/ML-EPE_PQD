@@ -19,15 +19,6 @@ from concurrent.futures import ProcessPoolExecutor
 output_dir = Path("confusion_matrix_outputs")
 output_dir.mkdir(exist_ok=True)
 
-def save_confusion_matrix_plot(folder, plot_title="confusion_matrix"):
-    folder.mkdir(parents=True, exist_ok=True)
-    timestamp = datetime.now().strftime("%Y%m%d%H%M%S%f")
-    filename = f"{plot_title}_{timestamp}.png"
-    filepath = folder / filename
-    plt.savefig(filepath, dpi=300, bbox_inches="tight")
-    plt.close()
-    return filepath
-
 cwd = Path.cwd()
 noises = ["noiseless", "50db", "40db", "30db", "20db"]
 def process(noise):
@@ -36,8 +27,6 @@ def process(noise):
     data = [pd.read_csv(f).drop(columns=['Unnamed: 0']) for f in directory.iterdir() if f.is_file()]
 
     resultsFile = open(str("Task1-manual-F1" + noise + ".txt"), 'w')
-
-
 
     # Example: dictionary mapping each file to its list of features to keep
     selected_features_per_file = {
@@ -91,15 +80,6 @@ def process(noise):
     Accuracy_LR = []
     Recall_LR = []
     bigData = combined_df
-
-    def dataGen(data, file):
-        allData = pd.concat([data[file]] + data[:file] + data[file+1:])
-        # allData = featureSnipper(allData, all_sorted_corrs[file], dataDepth)
-        
-        y = [1]*149
-        y.extend([0]*(8*149))
-        
-        return allData, y
 
     def linearModel(data):
         resultsFile.write('model4 = [')

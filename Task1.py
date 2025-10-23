@@ -20,7 +20,7 @@ output_dir = Path("confusion_matrix_outputs")
 output_dir.mkdir(exist_ok=True)
 
 cwd = Path.cwd()
-noises = ["noiseless"] #, "50db", "40db", "30db", "20db"]
+noises = ["noiseless", "50db", "40db", "30db", "20db"]
 
 
 def process(noise):
@@ -33,14 +33,6 @@ def process(noise):
     corrMatrices = [np.corrcoef(cat,rowvar=False) for cat in data]
 
     resultsFile = open(str("Task1-F1" + noise + ".txt"), 'w')
-
-    # i = 0
-    # for e in corrMatrices:
-    #     sn.heatmap(e, annot=True)
-    #     plt.title(files[i])
-    #     plt.show()
-    #     i = i + 1
-
 
     ## Sort features by correlation 
 
@@ -68,13 +60,6 @@ def process(noise):
         )
 
         all_sorted_corrs.append(corr_pairs_sorted)
-    # for i in range(8):
-    #     print(files[i], end=' ')
-    #     print(all_sorted_corrs[i])
-    # def featureSnipper(data, sortedArray, listDepth):
-    #     topList = sortedArray.head(listDepth)
-    #     keepList = list(pd.unique(pd.concat([topList['Var1'], topList['Var2']])))
-    #     return data[keepList]
 
     def featureSnipper(data, sortedArray, listLen):
         Len = 0
@@ -162,7 +147,6 @@ def process(noise):
             n_jobs=-1,
         )
 
-
         for file in range(9): # Step through all csv's (all PQD's)
             # print(files[file])
             Accuracy_LR = []
@@ -224,7 +208,7 @@ def process(noise):
             estimator=svmInit,
             param_grid=param_grid,
             scoring='f1',
-            cv=4,       # 5-fold cross-validation
+            cv=5,       # 5-fold cross-validation
             n_jobs=-1   # use all available CPU cores
         )
 

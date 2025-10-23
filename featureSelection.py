@@ -14,7 +14,7 @@ file_feature_stds = {}
 for file in directory.iterdir():
     if file.suffix.lower() == ".csv":
         df = pd.read_csv(file)
-        # Drop first column (index or ID)
+        # Drop first column (index)
         df = df.iloc[:, 1:]
         # Compute per-feature stats
         file_feature_means[file.name] = df.mean(numeric_only=True)
