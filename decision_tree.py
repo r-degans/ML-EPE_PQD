@@ -41,7 +41,7 @@ for snr in noise_levels:
   f1 = f1_score(y_test, y_pred, average = None, labels = pqd)
   print(f"F1-score:")
   for label, value in zip(pqd, f1):
-    print(f"{label}: {score: .4f}")
+    print(f"{label}: {value: .4f}")
   
   f1_average = f1_score(y_test, y_pred, average='macro')
   print(f"F1-score averaged: {f1_average:.4f}")
