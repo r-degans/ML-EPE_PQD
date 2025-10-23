@@ -35,7 +35,7 @@ for snr in noise_levels:
   accuracy = accuracy_score(y_test, y_pred)
   results[snr] = accuracy
 
-  print(f"\nDecision Tree ({snr} db)")
+  print(f"\nDecision Tree ({snr})")
 #  print(classification_report(y_test, y_pred))
   pqd = sorted(y_test.unique())
   f1 = f1_score(y_test, y_pred, average = None, labels = pqd)
