@@ -4,7 +4,7 @@ import numpy as np
 from sklearn.neural_network import MLPClassifier
 from sklearn.model_selection import train_test_split, cross_val_score
 from sklearn.preprocessing import StandardScaler
-from sklearn.metrics import accuracy_score, classification_report, confusion_matrix, f1_score
+from sklearn.metrics import accuracy_score, confusion_matrix, f1_score
 
 def load_dataset(dir):
   frames=[]
@@ -43,10 +43,15 @@ for snr in noise_levels:
   accuracy = accuracy_score(y_test, y_pred)
   results[snr] = accuracy
 
-  print(f"\nMLP ({snr} db)")
-  f1 = f1_score(y_test, y_pred, average='macro')
-  print(f"F1-score: {f1:.4f}")
-#  print(classification_report(y_test, y_pred))
+  print(f"\nMLP ({snr})")
+  
+  pqd = sorted(y_test.unique())
+  f1 = f1_score(y_test, y_pred, average = None, labels = pqd)
+  print(f"F1-score:")
+  for label, value in zip(pqd, f1):
+    print(f"{label}: {value: .4f}")
+  f1_average = f1_score(y_test, y_pred, average='macro')
+  print(f"F1-score averaged: {f1_average:.4f}")  
   print("Confusion Matrix:\n", confusion_matrix(y_test, y_pred))
   cv_scores = cross_val_score(mlp, X, y, cv=5)
   print("Cross validation accuracy:", cv_scores.mean())
