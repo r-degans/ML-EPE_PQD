@@ -30,7 +30,7 @@ for snr in noise_levels:
   X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_state=42, stratify=y)
 
   mlp = MLPClassifier(
-    hidden_layer_sizes=(64, 32),
+    hidden_layer_sizes=(100,),
     activation='relu',
     solver='adam',
     max_iter=1000,
