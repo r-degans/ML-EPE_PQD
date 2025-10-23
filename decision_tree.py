@@ -45,7 +45,3 @@ for snr in noise_levels:
   print("Confusion Matrix:\n", confusion_matrix(y_test, y_pred))
   cv_scores = cross_val_score(clf, X, y, cv=5)
   print("Cross validation accuracy:", cv_scores.mean())
-
-#print("Decision Tree Summary")
-#for snr, accuracy in results.items():
-#  print(f"{snr}: {accuracy:.4f}")
