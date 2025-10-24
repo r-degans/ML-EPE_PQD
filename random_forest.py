@@ -1,3 +1,4 @@
+## Random Forest - run code to get performance metrics
 import os
 import pandas as pd
 import numpy as np
@@ -5,6 +6,7 @@ from sklearn.ensemble import RandomForestClassifier
 from sklearn.model_selection import train_test_split, cross_val_score
 from sklearn.metrics import accuracy_score, confusion_matrix, f1_score
 
+## Load data, combine it
 def load_dataset(dir):
   frames=[]
   for filename in os.listdir(dir):
@@ -17,16 +19,15 @@ def load_dataset(dir):
 
 file_path = "Files/"
 noise_levels = ["SNR_20db", "SNR_30db", "SNR_40db", "SNR_50db", "SNR_noiseless"]
-
 results={}
 
 for snr in noise_levels:
   data = load_dataset(os.path.join(file_path, snr))
   X = data.iloc[:, :-1]
   y = data["Label"]
-
   X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_state=42, stratify=y)
 
+  ## Model Training
   rf = RandomForestClassifier(
     n_estimators=100,
     max_depth=None,
@@ -35,9 +36,9 @@ for snr in noise_levels:
   rf.fit(X_train, y_train)
   y_pred = rf.predict(X_test)
 
+  ## Performance Metrics
   accuracy = accuracy_score(y_test, y_pred)
   results[snr] = accuracy
-
   print(f"\nRandom Forest (SNR value = {snr})")  
   pqd = sorted(y_test.unique())
   f1 = f1_score(y_test, y_pred, average = None, labels = pqd)
