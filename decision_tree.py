@@ -1,3 +1,4 @@
+## Decision Tree - run code to get performance metrics
 import os
 import pandas as pd
 import numpy as np
@@ -5,6 +6,8 @@ from sklearn.tree import DecisionTreeClassifier
 from sklearn.model_selection import train_test_split, cross_val_score
 from sklearn.metrics import accuracy_score, confusion_matrix, f1_score
 
+
+## Load data, combine it
 def load_dataset(dir):
   frames=[]
   for filename in os.listdir(dir):
@@ -27,10 +30,12 @@ for snr in noise_levels:
 
   X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_state=42, stratify=y)
 
+  ## Model Training
   clf= DecisionTreeClassifier(criterion="entropy", random_state=42)
   clf.fit(X_train, y_train)
   y_pred = clf.predict(X_test)
 
+  ## Performance Metrics
   accuracy = accuracy_score(y_test, y_pred)
   results[snr] = accuracy
 
