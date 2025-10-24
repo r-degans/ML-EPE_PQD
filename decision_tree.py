@@ -44,7 +44,7 @@ for snr in noise_levels:
     print(f"{label}: {value: .5f}")
     
   f1_average = f1_score(y_test, y_pred, average='macro')
-  print(f"Averaged F1-score: {f1_average:.5f}")
+  print(f"Averaged F1-score: {f1_average: .5f}")
   
   cv_scores = cross_val_score(clf, X, y, cv=5)
-  print("Cross-validation accuracy:", cv_scores.mean())
+  print(f"Cross-validation accuracy: {cv_scores.mean(): .5f}")
