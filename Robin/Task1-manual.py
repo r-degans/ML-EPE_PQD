@@ -100,9 +100,6 @@ def process(noise):
             X_train, X_test, y_train, y_test = train_test_split(dataX, dataY, test_size=0.2, random_state=Shuffle_state)
             X_train, X_val, y_train, y_val   = train_test_split(X_train, y_train, test_size=0.25, random_state=Shuffle_state) # 0.25 x 0.8 = 0.2
 
-            X_train = scaler.transform(X_train)
-            X_test = scaler.transform(X_test)
-            X_val = scaler.transform(X_val)
 
             clf_lr = LogisticRegression(class_weight='balanced', tol=1e-6, max_iter=10_000).fit(X_train, y_train)
             y_prediction = clf_lr.predict(X_val)
@@ -154,10 +151,6 @@ def process(noise):
             Shuffle_state = 4720
             X_train, X_test, y_train, y_test = train_test_split(dataX, dataY, test_size=0.2, random_state=Shuffle_state)
             X_train, X_val, y_train, y_val   = train_test_split(X_train, y_train, test_size=0.25, random_state=Shuffle_state) # 0.25 x 0.8 = 0.2
-
-            X_train = scaler.transform(X_train)
-            X_test = scaler.transform(X_test)
-            X_val = scaler.transform(X_val)
 
             # clf_lr = LogisticRegression(class_weight='balanced', penalty='l1', solver='liblinear', C=40.0, max_iter=10_000, tol = 1e-6).fit(X_train, y_train)
             # modelList.append(clf_lr)
@@ -213,10 +206,6 @@ def process(noise):
             Shuffle_state = 4720
             X_train, X_test, y_train, y_test = train_test_split(dataX, dataY, test_size=0.2, random_state=Shuffle_state)
             X_train, X_val, y_train, y_val   = train_test_split(X_train, y_train, test_size=0.25, random_state=Shuffle_state) # 0.25 x 0.8 = 0.2
-
-            X_train = scaler.transform(X_train)
-            X_test = scaler.transform(X_test)
-            X_val = scaler.transform(X_val)
 
             grid_search.fit(X_train, y_train)
             y_prediction = grid_search.best_estimator_.predict(X_val)
