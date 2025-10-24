@@ -37,16 +37,17 @@ for snr in noise_levels:
   y_pred = rf.predict(X_test)
 
   ## Performance Metrics
-  accuracy = accuracy_score(y_test, y_pred)
-  results[snr] = accuracy
-  print(f"\nRandom Forest (SNR value = {snr})")  
+  print(f"\n Random Forest (SNR value = {snr})")
+  print("Confusion Matrix: \n", confusion_matrix(y_test, y_pred))
+  
   pqd = sorted(y_test.unique())
   f1 = f1_score(y_test, y_pred, average = None, labels = pqd)
   print(f"F1-score:")
   for label, value in zip(pqd, f1):
-    print(f"{label}: {value: .4f}")
+    print(f"{label}: {value: .5f}")
+    
   f1_average = f1_score(y_test, y_pred, average='macro')
-  print(f"F1-score averaged: {f1_average:.4f}")
-  print("Confusion Matrix:\n", confusion_matrix(y_test, y_pred))
+  print(f"F1-score averaged: {f1_average:.5f}")
+  
   cv_scores = cross_val_score(rf, X, y, cv=5)
   print("Cross validation accuracy:", cv_scores.mean())
